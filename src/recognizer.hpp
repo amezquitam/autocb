@@ -112,8 +112,12 @@ private:
     const Table<num_actions> &table;
 };
 
+
+// Guia de deduccion, deduce el parametro num_actions dependiendo 
+// del argumento del constructor
 template <int num_actions>
 Recognizer(Table<num_actions> const&) -> Recognizer<num_actions>;
+
 
 // implementacion de la funcion reconocedora
 template<int num_actions>
@@ -121,6 +125,7 @@ inline bool Recognizer<num_actions>::recognize(std::string str) {
     // quitar espacios
     str.erase(std::remove_if(str.begin(), str.end(), 
         [] (char c) { return c == ' ' || c == '\t';  }), str.end());
+
     // vacea la pila
     clean(stack);
 
