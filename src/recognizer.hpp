@@ -59,9 +59,8 @@ struct Table {
      * @param rem_string: String pendiente por procesar
     **/
     action_info action(vstring stack_symbol, vstring rem_string) const {
-        // un iterador que contiene un par con la clave pasada y el 
-        // valor correspondiente el cual es otro mapa, o action_table.end() 
-        // si no ha encontrado nada
+        // un iterador que contiene un par con la clave y el 
+        // valor correspondiente, el cual es otro mapa
         auto entry_table_it = action_table.find(stack_symbol);
         if (entry_table_it == action_table.end())
             return {"", -1};
@@ -70,19 +69,15 @@ struct Table {
         // ya que en first se encuentra la key
         auto entry_table = entry_table_it->second;
         
-        // aqui lo ideal seria usar la clave como mapa para encontrar 
-        // el indice de accion, pero dado, que la entrada puede tener
-        // varios caracteres (sin, cos, tan), se necesita hacer una 
-        // busqueda lineal, sin embargo, antes de eso se usará el ultimo
-        // caracter para una busqueda rapida
+        // se crea un substring con el primer caracter de la cadena
         auto entry = rem_string.substr(0, 1);
+        // se busca si hay alguna accion asociada
         auto index_it = entry_table.find(entry);
         if (index_it != entry_table.end()) {
             return { entry, index_it->second };
         }
 
         for (auto [key, action_index]: entry_table) {
-            // 
             if (rem_string.size() < key.size())
                 continue;
             // se recorta el string, para ajustarlo a la key
