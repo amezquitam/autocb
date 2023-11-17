@@ -4,6 +4,7 @@
 #include <stack>
 #include <functional>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include "util.hpp"
 
@@ -25,7 +26,15 @@ using f_replace = std::function<void(strlist)>;
 // tipo: funcion para operar con la cadena de entrada
 using f_advance = std::function<void(int)>;
 
-
+/**
+ * Esta estructura se usa para comunicarse con la pila
+ * (apilar, desapilar, remplazar) y con el flujo de la entrada
+ * (avance, retenga).
+ * 
+ * Esta se le pasa a una funcion de tipo @link{ f_action }, las 
+ * cuales se definen en la lista de acciones que se encuentran en
+ * @link{ Table }
+**/
 struct action_context {
     f_pop       pop;
     f_push      push;
@@ -37,7 +46,7 @@ struct action_context {
 
 
 // tipo: funcion que representa una accion en la pila
-using f_action = std::function<void(action_context)>;
+using f_action = std::function<void(action_context const&)>;
 // tipo: double hashmap [simbolo de pila] -> [simbolo de entrada] -> action number
 using action_map = std::unordered_map<vstring, std::unordered_map<vstring, int>>;
 
@@ -67,7 +76,7 @@ struct Table {
         
         // se accede al mapa, el cual es está en la propiedad second
         // ya que en first se encuentra la key
-        auto entry_table = entry_table_it->second;
+        auto& entry_table = entry_table_it->second;
         
         // se crea un substring con el primer caracter de la cadena
         auto entry = rem_string.substr(0, 1);
