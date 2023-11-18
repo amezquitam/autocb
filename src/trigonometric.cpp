@@ -81,9 +81,9 @@ std::pair<bool, double> is_trigonometric(const char* str)
     Table<19> table = {
         // actions
         {
-            /* 00 */    [](action_context const& ctx) {
-                            ctx.replace({"<S'>", "<M>"});
-                        },
+        /* 00 */    [](action_context const& ctx) {
+                        ctx.replace({"<S'>", "<M>"});
+                    },
         /* 01 */    [](action_context const& ctx) {
                         ctx.advance(ctx.entry_symbol.length());
                         ctx.replace({"<S'>", "<M>"});
@@ -249,8 +249,8 @@ std::pair<bool, double> is_trigonometric(const char* str)
 
     auto [isTrigonometric, tokenTree] = recognizer.recognize(str);
 
-    if (!isTrigonometric) 
-        return {isTrigonometric, 0.0};
+    if (!isTrigonometric)
+        return { isTrigonometric, 0.0 };
 
     double value = evaluate(tokenTree);
 
