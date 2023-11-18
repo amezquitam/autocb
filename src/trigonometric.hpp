@@ -1,3 +1,6 @@
 #pragma once
 
-bool is_trigonometric(const char* str);
+#include <utility>
+
+std::pair<bool, double> is_trigonometric(const char* str);
+

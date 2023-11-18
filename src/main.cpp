@@ -8,7 +8,11 @@ int main() {
     std::getline(std::cin, entry);
 
     std::cout << std::boolalpha;
-    std::cout << "Is trigonometric?: " << is_trigonometric(entry.c_str()) << '\n';
+
+    auto [is_trig, value] = is_trigonometric(entry.c_str());
+
+    std::cout << "Is trigonometric?: " << is_trig << '\n';
+    std::cout << "Evaluated: " << value << '\n';
 
     std::cin.get();
 }
